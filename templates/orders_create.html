@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+
+{% block main %}
+    <h1>Create an Order</h1>
+
+    <!-- Today's Date -->
+    <p>Today's Date:</p>
+    <p id="myId"></p> 
+    <script> 
+        var date = new Date(); 
+        var dd = date.getDate(); 
+        var mm = date.getMonth() + 1; 
+        var yyyy = date.getFullYear(); 
+        var newDate = mm + "-" + dd + "-" +yyyy; 
+        var p = document.getElementById("myId"); 
+        p.innerHTML = newDate; 
+    </script>
+
+        
+    <h2>Items in Current Order</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Code</th>
+                <th>Quantity</th>
+                <th>Width</th>
+                <th>Height</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in current_items %}
+                <tr>
+                    <td>{{ item.product_code }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.width }}</td>
+                    <td>{{ item.height }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <hr>
+    <h2>Add Items to Order</h2>
+
+    <!-- Add Item Form -->
+    <form method="POST" action="{{ url_for('orders_create') }}">
+        {{ form.hidden_tag() }}
+        <p>{{ form.code.label }}<br>{{ form.code() }}</p>
+        <p>{{ form.quantity.label }}<br>{{ form.quantity(min=1) }}</p>
+        <p>{{ form.width.label }}<br>{{ form.width }}</p>
+        <p>{{ form.height.label }}<br>{{ form.height }}</p>
+        <p>{{ form.add_item() }}</p>
+    </form>
+
+    <!-- Clear Order Form -->
+    <form method="POST" action="{{ url_for('clear_order') }}">
+        <p>{{ form.clear_order() }}</p>
+    </form>
+
+    <!-- Submit Order Form -->
+    <form method="POST" action="{{ url_for('submit_order') }}">
+        <p>{{ form.submit_order() }}</p>
+    </form>
+
+    <!-- Flash messages -->
+    <ul>
+        {% for message in get_flashed_messages() %}
+            <li class="flash {{ message.category }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

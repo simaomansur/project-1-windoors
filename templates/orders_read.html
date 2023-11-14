@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block main %}
+    <style>
+        tr:nth-child(odd) {
+            background-color: white;
+        }
+        tr:nth-child(even) {
+            background-color: lightgrey;
+        }
+    </style>
+    <h2>Order</h2>
+    <!-- Check if there are any orders to display -->
+        <table>
+            <tr>
+                <th>Product Id</th>
+                <th>Quantity</th>
+                <th>Width</th>
+                <th>Height</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+            {% for item in order.items %}
+                <tr>
+                    <td>{{ item.product_code }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.width }}</td>
+                    <td>{{ item.height }}</td>
+                    <td>{{ item.price_total }}</td>
+                </tr>
+            {% endfor %}
+{% endblock %}

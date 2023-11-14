@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block main %}
+    <style>
+        tr:nth-child(odd) {
+            background-color: white;
+        }
+        tr:nth-child(even) {
+            background-color: lightgrey;
+        }
+    </style>
+    <h2>Your Orders</h2>
+    <!-- Check if there are any orders to display -->
+        <table>
+            <tr>
+                <th>Order Number</th>
+                <th>Creation Date</th>
+                <th>Status</th>
+                <th>Email</th>
+                <th></th>
+                <th>Actions</th>
+            </tr>
+            {% for order in current_user.orders %}
+                <tr>
+                    <td>{{ order.number }}</td>
+                    <td>{{ order.creation_date }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>{{ order.user_email }}</td>
+                    <!-- delete order -->
+                    <td><button type="button" class="button" onclick=confirmed_action("{{ url_for('orders_delete', number=order.number) }}")>Delete</button></td>
+                    <!-- look at order -->
+                    <td><button type="button" class="button" onclick=simple_action("{{ url_for('orders_read', number=order.number) }}")>View</button></td>
+                </tr>
+            {% endfor %}
+        </table>
+    <!-- Button to create a new order -->
+    <button type="button" class="button" onclick=simple_action("{{ url_for('users_signout') }}")>Sign Out</button>&nbsp;&nbsp;<button type="button" class="button" onclick=simple_action("{{ url_for('orders_create') }}")>New Order</button>
+    <script type="text/javascript">
+        function simple_action(target) {
+            window.location = target
+        }
+
+        function confirmed_action(target) {
+                if (confirm('Are you sure?')) {
+                    window.location = target
+                }
+            }
+    </script>
+{% endblock %}

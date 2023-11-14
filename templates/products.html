@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <style>
+        tr:nth-child(odd) {
+            background-color: white;
+        }
+        tr:nth-child(even) {
+            background-color: lightgrey;
+        }
+    </style>
+    <h1>Products</h1>
+    <h2>Current Products</h2>
+    <table>
+        <tr>
+            <th>Code</th>
+            <th>Description</th>
+            <th>Availability</th>
+            <th>Price</th>
+        </tr>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.code }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.available }}</td>
+                <td>{{ product.price }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <!-- go to create product html button -->
+    <button onclick="window.location.href='/orders/admin/products/create'">Create Product</button>
+{% endblock %}

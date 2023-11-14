@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block main %}
+    <h2>Create New Product</h2>
+    <form action="{{ url_for('products_create') }}" method="post">
+        {{ form.hidden_tag() }}
+        <p>{{ form.code.label }}<br>{{ form.code() }}</p>
+        <p>{{ form.description.label }}<br>{{ form.description() }}</p>
+        <p>{{ form.available.label }}<br>{{ form.available() }}</p>
+        <p>{{ form.price.label }}<br>{{ form.price() }}</p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
